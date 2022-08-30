@@ -6,7 +6,7 @@ function saludar() {
     " a continuacion puede escoger productos de la tienda"
   );
 }
-//declaro la funcion comprar producto
+//funcion comprar producto
 function comprarProducto() {
   producto = prompt(
     "elija una marca de celular \n 1: iPhone \n 2: Samsung \n 3: LG"
@@ -26,7 +26,7 @@ function comprarProducto() {
 //declaro variables
 let producto;
 let nombre = prompt("ingrese su nombre");
-//llamo funcion saludar
+//funcion saludar
 saludar();
 let opcion = prompt(
   "ingrese una opcion: \n 1: comprar producto \n 2: Finalizar compra \n 3: Terminar"
