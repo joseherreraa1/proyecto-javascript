@@ -13,7 +13,7 @@ class celulares{
         }
 }
 const samsungS20 = new celulares ("Samsung", "Samsung S20", 180000);
-const samsungA73 = new celulares ("Samsung", "Samsung A72", 110000);
+const samsungA73 = new celulares ("Samsung", "Samsung A73", 110000);
 const iphone13 = new celulares ("iPhone", "iPhone 13", 250000);
 const iphone12 = new celulares ("iPhone", "iPhone 12", 200000);
 const huaweiY9 = new celulares ("Huawei", "Huawei Y9", 90000);
@@ -22,6 +22,16 @@ const xiaominote = new celulares("Xiaomi", "Xiaomi Note 11", 190000);
 const xiaomipoco = new celulares("Xiaomi", "Xiaomi Poco M3", 140000)
 
 //Arrays
+let stock = [
+    {modelo: "Samsung S20", precio: "180000"},
+    {modelo: "Samsung A73", precio: "110000"},
+    {modelo: "iPhone 13", precio: "250000"},
+    {modelo: "iPhone 12", precio: "200000"},
+    {modelo: "Huawei Y9", precio: "90000"},
+    {modelo: "Huawei P40", precio: "230000"},
+    {modelo: "Xiaomi Note 11", precio: "190000"},
+    {modelo: "Xiaomi Poco M3", precio: "140000"},
+];
 
 const celularComprado = [];
 
@@ -130,9 +140,20 @@ function xiaomi(){
     }
 }
 
+//Funcion Mostrar Oferta
+
+function mostrarOferta(){
+    const ofertas = stock.filter((el) => el.precio < 100000);
+    for ( const oferta of ofertas){
+        alert(
+            `La oferta de hoy es : Celular ${oferta.modelo} a un valor de $ ${oferta.precio}`
+        );
+    }
+}
+
 //Seleccion de producto
 function seleccionProductos(){
-    let productos = parseInt(prompt(`Porfavor seleccione la marca del producto que desea comprar: \n 1-Samsung\n 2-iPhone\n 3-Huawei\n 4-Xiaomi\n 5-Cancelar\n 6-Finalizar Compra`));
+    let productos = parseInt(prompt(`Porfavor seleccione la marca del producto que desea comprar: \n 1-Samsung\n 2-iPhone\n 3-Huawei\n 4-Xiaomi\n 5-Cancelar \n 6- Mostrar Oferta\n 7-Finalizar Compra`));
     while (productos !== 5){
         if(productos === 1){
             samsung();
@@ -177,8 +198,19 @@ function seleccionProductos(){
             if(opcion == "No" || opcion == "no"){
                 productos = 5;
             }
-        } 
-        if(productos === 6){
+        }
+        if (productos == "6"){
+            mostrarOferta();
+            let opcion = prompt("Desea seguir comprando? Si/No");
+            if(opcion == "Si" || opcion == "si"){
+                seleccionProductos();
+                productos = 5;
+            }
+            if(opcion == "No" || opcion == "no"){
+                productos = 5;
+            } 
+        }
+        if(productos === 7){
             productos = 5;
         }
     }
