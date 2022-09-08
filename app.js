@@ -23,14 +23,14 @@ const xiaomipoco = new celulares("Xiaomi", "Xiaomi Poco M3", 140000)
 
 //Arrays
 let stock = [
-    {modelo: "Samsung S20", precio: "180000"},
-    {modelo: "Samsung A73", precio: "110000"},
-    {modelo: "iPhone 13", precio: "250000"},
-    {modelo: "iPhone 12", precio: "200000"},
-    {modelo: "Huawei Y9", precio: "90000"},
-    {modelo: "Huawei P40", precio: "230000"},
-    {modelo: "Xiaomi Note 11", precio: "190000"},
-    {modelo: "Xiaomi Poco M3", precio: "140000"},
+    samsungS20,
+    samsungA73,
+    iphone13,
+    iphone12,
+    huaweiY9,
+    huaweiP40,
+    xiaominote,
+    xiaomipoco,
 ];
 
 const celularComprado = [];
@@ -146,7 +146,7 @@ function mostrarOferta(){
     const ofertas = stock.filter((el) => el.precio < 100000);
     for ( const oferta of ofertas){
         alert(
-            `La oferta de hoy es : Celular ${oferta.modelo} a un valor de $ ${oferta.precio}`
+            `La oferta de hoy es : Celular ${oferta.nombre} a un valor de $ ${oferta.precio}`
         );
     }
 }
