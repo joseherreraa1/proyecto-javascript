@@ -175,7 +175,7 @@ function seleccionProductos(){
             }
             if(opcion == "No" || opcion == "no"){
                 productos = 5;
-            }
+            } 
         }
         if(productos === 3){
             huawei();
