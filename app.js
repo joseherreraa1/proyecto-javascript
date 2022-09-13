@@ -1,4 +1,4 @@
-//declarovariables
+//declaro variables
 let productos;
 let compraTotal = 0;
 
@@ -243,3 +243,5 @@ if(compraTotal > 1){
 }else{
     despedida(ingresoUsuario);
 } 
+let saludo = document.querySelector("#saludo");
+saludo.innerHTML = `<h2>Muchas gracias por tu compra ${ingresoUsuario}</h2>`; 
