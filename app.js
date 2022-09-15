@@ -1,28 +1,46 @@
-//declaro variables
-let productos;
+//Array de carrito
+const productosCarrito = [];
+
+//Funciones Local Storage
+function guardarProductos(productos){
+    localStorage.setItem("productos", JSON.stringify(productos));
+}
+function obtenerProductos(){
+    return JSON.parse(localStorage.getItem("productos")) || [];
+}
+function guardarProductosCarrito(carrito){
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+function obtenerProductosCarrito(){
+    return JSON.parse(localStorage.getItem("carrito")) || [];
+}
+guardarProductosCarrito(productosCarrito);
+
+//Compra total
 let compraTotal = 0;
 
-//Clases y objetos
-
+//Constructor de productos
 class celulares{
-        constructor(marca, nombre, precio){
-            this.marca = marca;
-            this.nombre = nombre;
-            this.precio = parseInt(precio);
-            this.comprado = function(){alert("Agregaste al carrito: " + this.nombre + " por $" + this.precio)};
-        }
+    constructor(id, marca, nombre, precio, imagen){
+        this.id = parseInt(id);
+        this.marca = marca;
+        this.nombre = nombre;
+        this.precio = parseInt(precio);
+        this.imagen = imagen;
+    }
 }
-const samsungS20 = new celulares ("Samsung", "Samsung S20", 180000);
-const samsungA73 = new celulares ("Samsung", "Samsung A73", 110000);
-const iphone13 = new celulares ("iPhone", "iPhone 13", 250000);
-const iphone12 = new celulares ("iPhone", "iPhone 12", 200000);
-const huaweiY9 = new celulares ("Huawei", "Huawei Y9", 90000);
-const huaweiP40 = new celulares ("Huawei", "Huawei P40", 230000);
-const xiaominote = new celulares("Xiaomi", "Xiaomi Note 11", 190000);
-const xiaomipoco = new celulares("Xiaomi", "Xiaomi Poco M3", 140000)
+//Productos
+const samsungS20 = new celulares (1,"Samsung", "Samsung S20", 180000, "../recursos/s20.png");
+const samsungA73 = new celulares (2,"Samsung", "Samsung A73", 110000, "../recursos/a73.png");
+const iphone13 = new celulares (3,"iPhone", "iPhone 13", 250000, "../recursos/iphone13.png");
+const iphone12 = new celulares (4,"iPhone", "iPhone 12", 200000, "../recursos/iphone12.png");
+const huaweiY9 = new celulares (5,"Huawei", "Huawei Y9", 90000, "../recursos/huaweiy9.png");
+const huaweiP40 = new celulares (6,"Huawei", "Huawei P40", 230000, "../recursos/huaweip40.png");
+const xiaominote = new celulares(7,"Xiaomi", "Xiaomi Note 11", 190000, "../recursos/xiaominote11.png");
+const xiaomipoco = new celulares(8,"Xiaomi", "Xiaomi Poco M3", 140000, "../recursos/xiaomipocom3.png")
 
-//Arrays
-let stock = [
+//Array de Productos
+const productos = [
     samsungS20,
     samsungA73,
     iphone13,
@@ -32,216 +50,131 @@ let stock = [
     xiaominote,
     xiaomipoco,
 ];
+guardarProductos(productos);
 
-const celularComprado = [];
+//Secciones HTML
 
-//Funciones para Errores
+const seccionProductos = document.getElementById("productos");
 
-function errorUsuario() {alert("Ingrese un usuario valido");}
-function errorProducto() {alert("Ingrese producto valido");}
+//Carrito
+const seccionCarrito = document.getElementById("carrito");
+const productosEnCarrito = document.getElementById("productosCarrito");
+const seccionTotal = document.getElementById("totalConfirmar");
 
-//Funciones de Saludo y despedida
+//Botones Carrito
 
-function despedida(usuario){
-    alert("Adios " + usuario + ", esperamos verte pronto por aqui :)");
-}
-function despedidaCompra(usuario, total){
-    alert("Gracias por tu compra " + usuario + "!" + ", tu total a pagar es $" + total);
-}
-function saludoBienvenida(usuario){
-    alert("Bienvenido " + usuario + " a nuestra tienda, aqui encontraras celulares al mejor precio!");
-}
+let abrirCarrito = document.getElementById("abrirCarrito");
 
-//Seleccion Samsung
-
-function samsung (){
-    let seleccionSamsung = parseInt(prompt("1- Celular Samsung S20 $" + samsungS20.precio + 
-    "\n2- Celular Samsung A73 $" + samsungA73.precio + "\n3- Finalizar Compra"));
-    if (seleccionSamsung == 1){
-        celularComprado.push(samsungS20);
-        samsungS20.comprado();
-        compraTotal = compraTotal + samsungS20.precio;
-    }
-    if(seleccionSamsung == 2){
-        celularComprado.push(samsungA73);
-        samsungA73.comprado();
-        compraTotal = compraTotal + samsungA73.precio;
-    }
-    if(seleccionSamsung == null){
-        errorProducto();
-    }else if (seleccionSamsung == ""){
-        errorProducto();
-    }
+abrirCarrito.onclick = () => {
+    seccionCarrito.classList.add("carritoActivo");
 }
 
-//Seleccion iPhone
+let cerrarCarrito = document.getElementById("cerrarCarrito");
 
-function iPhone(){
-    let seleccioniPhone = parseInt(prompt("1-Celular iPhone 13 $" + iphone13.precio 
-    + "\n2-Celular iPhone 12 $" + iphone12.precio + "\n3-Finalizar Compra"));
-    if(seleccioniPhone == 1){
-        celularComprado.push(iphone13);
-        iphone13.comprado();
-        compraTotal = compraTotal + iphone13.precio;
-    }
-    if(seleccioniPhone == 2){
-        celularComprado.push(iphone12);
-        iphone12.comprado();
-        compraTotal = compraTotal + iphone12.precio;
-    }
-    if(seleccioniPhone == null){
-        errorProducto();
-    }else if (seleccioniPhone == ""){
-        errorProducto();
-    }
+cerrarCarrito.onclick = () => {
+    seccionCarrito.classList.remove("carritoActivo");
 }
 
-//Seleccion Huawei
+//Renderizado de productos
 
-function huawei(){
-    let seleccionHuawei = parseInt(prompt("1-Celular Huawei Y9 $" + huaweiY9.precio 
-    + "\n2-Huawei P40 $" + huaweiP40.precio + "\n3-Finalizar Compra"));
-    if(seleccionHuawei == 1){
-        celularComprado.push(huaweiY9);
-        huaweiY9.comprado();
-        compraTotal = compraTotal + huaweiY9.precio;
-    }
-    if(seleccionHuawei == 2){
-        celularComprado.push(huaweiP40);
-        huaweiP40.comprado();
-        compraTotal = compraTotal + huaweiP40.precio;
-    }
-    if(seleccionHuawei == null){
-        errorProducto();
-    }else if (seleccionHuawei == ""){
-        errorProducto();
-    }
+function renderProductos(){
+    obtenerProductos();
+    for(const producto of productos){
+        const tarjetas = document.createElement("div");
+        tarjetas.className = "tarjeta";
+        tarjetas.innerHTML = `  <img src="${producto.imagen}" alt="${producto.nombre}">
+                                <h3>${producto.nombre}</h3>
+                                <h4>$ ${producto.precio}</h4>
+                                <button class="boton1" onclick="agregarCarrito(${producto.id})" >Añadir al carrito</button>
+                                `
+        seccionProductos.appendChild(tarjetas);
+    }    
 }
 
-//Seleccion Xiaomi
+//Elemento seleccionado
 
-function xiaomi(){
-    let seleccionXiaomi= parseInt(prompt("1-Celular Xiaomi Note 11 $" + xiaominote.precio 
-    + "\n2-Celular Xiaomi Poco 3 $" + xiaomipoco.precio + "\n3-Finalizar Compra"));
-    if(seleccionXiaomi== 1){
-        celularComprado.push(xiaominote);
-        xiaominote.comprado();
-        compraTotal = compraTotal + xiaominote.precio;
-    }
-    if(seleccionXiaomi== 2){
-        celularComprado.push(xiaomipoco);
-        xiaomipoco.comprado();
-        compraTotal = compraTotal + xiaomipoco.precio;
-    }
-    if(seleccionXiaomi == null){
-        errorProducto();
-    }else if (seleccionXiaomi== ""){
-        errorProducto();
-    }
+function seleccionado (id){
+    return productos.find(x => x.id == id);
 }
 
-//Funcion Mostrar Oferta
-
-function mostrarOferta(){
-    const ofertas = stock.filter((el) => el.precio < 100000);
-    for ( const oferta of ofertas){
-        alert(
-            `La oferta de hoy es : Celular ${oferta.nombre} a un valor de $ ${oferta.precio}`
-        );
-    }
-}
-
-//Seleccion de producto
-function seleccionProductos(){
-    let productos = parseInt(prompt(`Porfavor seleccione la marca del producto que desea comprar: \n 1-Samsung\n 2-iPhone\n 3-Huawei\n 4-Xiaomi\n 5-Cancelar \n 6- Mostrar Oferta\n 7-Finalizar Compra`));
-    while (productos !== 5){
-        if(productos === 1){
-            samsung();
-            let opcion = prompt("Desea seguir comprando? Si/No");
-            if(opcion == "Si" || opcion == "si"){
-                seleccionProductos();
-                productos = 5;
-            }
-            if(opcion == "No" || opcion == "no"){
-                productos = 5;
-            }
+//Agregar elemento al carrito
+function agregarCarrito(id){
+    let productoSeleccionado = seleccionado(id);
+    let carritoProductos = obtenerProductosCarrito();
+    productoSeleccionado.cantidad = 1;
+    carritoProductos.push(productoSeleccionado);
+    guardarProductosCarrito(carritoProductos);
+        const elementoAñadido = document.createElement("div");
+        elementoAñadido.className = "elementoAñadido";
+        elementoAñadido.innerHTML = `
+                                    <div>
+                                    <h3>${productoSeleccionado.nombre}</h3>
+                                    <h4>${productoSeleccionado.precio}$</h4>
+                                    <button class="boton1" onclick="eliminarCarrito(${productoSeleccionado.id})">Eliminar</button>
+                                    </div>
+                                    <div>
+                                    <img class="imgCarrito" src="${productoSeleccionado.imagen}" alt="">
+                                    </div>
+                                    `
+        productosEnCarrito.appendChild(elementoAñadido);
+        seccionTotal.innerHTML = "";
+        if(carritoProductos.length > 0){
+            seccionTotal.innerHTML = `
+                                    <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
+                                    <h4>Total a pagar: $${compraTotal = compraTotal + productoSeleccionado.precio}</h4>
+                                    `
         }
-        if(productos === 2){
-            iPhone();
-            let opcion = prompt("Desea seguir comprando? Si/No");
-            if(opcion == "Si" || opcion == "si"){
-                seleccionProductos();
-                productos = 5;
-            }
-            if(opcion == "No" || opcion == "no"){
-                productos = 5;
-            } 
+}
+
+//Eliminar elemento del carrito
+function eliminarCarrito(id){
+    let carritoProductos = obtenerProductosCarrito();
+    let productoSeleccionado = seleccionado(id);
+    console.log(productoSeleccionado);
+    let posicion = carritoProductos.findIndex(x => x.id == id);
+    carritoProductos[posicion].cantidad -= 1;
+    compraTotal = 0;
+    if(carritoProductos[posicion].cantidad == 0){
+        carritoProductos.splice(posicion, 1);
+        productosEnCarrito.innerHTML = "";
+        seccionTotal.innerHTML = "";
+        for(let producto of carritoProductos){
+            const elementoAñadido = document.createElement("div");
+            elementoAñadido.className = "elementoAñadido";
+            elementoAñadido.innerHTML = `
+                                        <div>
+                                        <h3>${producto.nombre}</h3>
+                                        <h4>${producto.precio}$</h4>
+                                        <button class="boton1" onclick="eliminarCarrito(${producto.id})">Eliminar</button>
+                                        </div>
+                                        <div>
+                                        <img class="imgCarrito" src="${producto.imagen}" alt="">
+                                        </div>
+                                        `
+            productosEnCarrito.appendChild(elementoAñadido);
+            seccionTotal.innerHTML = `
+            <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
+            <h4>Total a pagar: $${compraTotal = compraTotal + producto.precio}</h4>
+            `
         }
-        if(productos === 3){
-            huawei();
-            let opcion = prompt("Desea seguir comprando? Si/No");
-            if(opcion == "Si" || opcion == "si"){
-                seleccionProductos();
-                productos = 5;
-            }
-            if(opcion == "No" || opcion == "no"){
-                productos = 5;
-            }
-        }
-        if(productos === 4){
-            xiaomi();
-            let opcion = prompt("Desea seguir comprando? Si/No");
-            if(opcion == "Si" || opcion == "si"){
-                seleccionProductos();
-                productos = 5;
-            }
-            if(opcion == "No" || opcion == "no"){
-                productos = 5;
-            }
-        }
-        if (productos == "6"){
-            mostrarOferta();
-            let opcion = prompt("Desea seguir comprando? Si/No");
-            if(opcion == "Si" || opcion == "si"){
-                seleccionProductos();
-                productos = 5;
-            }
-            if(opcion == "No" || opcion == "no"){
-                productos = 5;
-            } 
-        }
-        if(productos === 7){
-            productos = 5;
-        }
+        guardarProductosCarrito(carritoProductos);
     }
 }
 
-//Main
-//Ingreso de usuario
-let ingresoUsuario = prompt("Ingrese su nombre de usuario:");
-if(ingresoUsuario == null){
-    errorUsuario();
-}else if(ingresoUsuario == ""){
-    errorUsuario();
+//Evento confirmar compra
+function confirmarCompra(){
+    let carritoProductos = obtenerProductosCarrito();
+    seccionTotal.innerHTML = "";
+    seccionTotal.innerHTML = `
+                            <h4>
+                                Compra confirmada
+                            </h4>
+                            `
+    productosEnCarrito.innerHTML = "";
+    carritoProductos = [];
+    guardarProductosCarrito(carritoProductos);
 }
 
-//Bienvenida al usuario
-saludoBienvenida(ingresoUsuario);
 
-//Compra
-seleccionProductos();
-
-//Despedida
-if(compraTotal > 1){
-    alert("Carrito de compras\n " + celularComprado.map((celular) => " " + celular.nombre + " por $" + celular.precio + "\n"));
-    let confirmacion = prompt("Confirma su compra? (Si/No):");
-    if(confirmacion == "si" || confirmacion == "Si"){
-        despedidaCompra(ingresoUsuario, compraTotal);
-    }else{
-        despedida(ingresoUsuario);
-    }
-}else{
-    despedida(ingresoUsuario);
-} 
-let saludo = document.querySelector("#saludo");
-saludo.innerHTML = `<h2>Muchas gracias por tu compra ${ingresoUsuario}</h2>`; 
+//Renderizado de productos
+renderProductos();
