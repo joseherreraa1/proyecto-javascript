@@ -4,73 +4,52 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="shortcut icon" href="" type="">
     <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <title>Tienda</title>
 </head>
 <body>
-    <nav class="navMobile">
-        <div class="buscadorCarrito">
-            <div class="logo animate__animated animate__jackInTheBox">
-                <a href="../index.html"><img src="" alt=""></a>
-            </div>
-            <div class="buscador animate__animated animate__fadeInDown">
-                <i class='bx bx-search-alt-2 iconoBuscador'></i>
-                <input type="text" placeholder="Buscar" class="buscadorTexto">
-                
-            </div>
-        <a href=""><i class='bx bx-cart-download animate__animated animate__fadeInDown iconoCarrito'></i></a>
-    </div>
-            <a href=""><i class='bx bx-cart-download animate__animated animate__fadeInDown iconoCarrito'></i></a>
-        </div>
-    </nav>
-
-
-    <nav class="animate__animated animate__fadeInDown navDesktop">
-
+    <nav class="animate__animated animate__fadeInDown ">
         <div class="logo animate__animated animate__jackInTheBox">
-            <a href="../index.html"><img src="" alt=""></a>
+            <a href="#"><img src="" alt=""></a>
         </div>
-        <ul>
+        <ul class="">
             <a href="#"><li class="botonActivo">Tienda</li></a>
         </ul>
         <div class="buscadorCarrito">
             <div class="buscador animate__animated animate__fadeInDown">
                 <i class='bx bx-search-alt-2 iconoBuscador'></i>
-                <input type="text" placeholder="Buscar" class="buscadorTexto">
-
+                <input type="text" placeholder="Buscar" class="buscadorTexto">              
             </div>
-
-            <i id="abrirCarrito" class='bx bx-cart-download animate__animated animate__fadeInDown iconoCarrito-catalogo'></i>
-        </div>
-        <div class="carrito" id="carrito">
-            <div class="tuCarrito">
-                <h3>Tu carrito de compras</h3>
-                <i class='bx bx-x-circle' id="cerrarCarrito"></i>
-            </div>
-            <div class="productosCarrito" id="productosCarrito">
-            </div>
-            <div class="totalConfirmar" id="totalConfirmar">
+            <div class="logoCarrito">
+                <i id="abrirCarrito" class='bx bx-cart-download animate__animated animate__fadeInDown iconoCarrito-catalogo'></i>
+                <h3 id="contadorCarrito"></h3>
             </div>
         </div>
     </nav>
-
-
-    <main>
-        <section class="seccionProductos animate__animated animate__fadeInDown">
-            <h4 class="tituloProductos">Productos</h4>
-            <div class="productos" id="productos">              
-            </div>
-        </section>
-    </main>
-
-
-
+<div>
+    <div class="carrito"  id="carrito">
+        <div class="tuCarrito">
+            <h3>Tu carrito de compras</h3>
+            <i class='bx bx-x-circle' id="cerrarCarrito"></i>
+        </div>
+        <div class="productosCarrito" id="productosCarrito">
+        </div>
+        <div class="totalConfirmar" id="totalConfirmar">
+        </div>
+    </div>
+</div>
+<main>
+    <section class="seccionProductos animate__animated animate__fadeInDown">
+        <h4 class="tituloProductos">Productos</h4>
+        <div class="productos" id="productos">           
+        </div>
+    </section>
+</main>
     <footer>
     </footer>
-
-    <script src="../app.js"></script>
+    <script src="./app.js"></script>
 </body>
 </html>

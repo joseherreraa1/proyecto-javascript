@@ -30,14 +30,14 @@ class celulares{
     }
 }
 //Productos
-const samsungS20 = new celulares (1,"Samsung", "Samsung S20", 180000, "../recursos/s20.png");
-const samsungA73 = new celulares (2,"Samsung", "Samsung A73", 110000, "../recursos/a73.png");
-const iphone13 = new celulares (3,"iPhone", "iPhone 13", 250000, "../recursos/iphone13.png");
-const iphone12 = new celulares (4,"iPhone", "iPhone 12", 200000, "../recursos/iphone12.png");
-const huaweiY9 = new celulares (5,"Huawei", "Huawei Y9", 90000, "../recursos/huaweiy9.png");
-const huaweiP40 = new celulares (6,"Huawei", "Huawei P40", 230000, "../recursos/huaweip40.png");
-const xiaominote = new celulares(7,"Xiaomi", "Xiaomi Note 11", 190000, "../recursos/xiaominote11.png");
-const xiaomipoco = new celulares(8,"Xiaomi", "Xiaomi Poco M3", 140000, "../recursos/xiaomipocom3.png")
+const samsungS20 = new celulares (1,"Samsung", "Samsung S20", 180000, "recursos/s20.png");
+const samsungA73 = new celulares (2,"Samsung", "Samsung A73", 110000, "recursos/a73.png");
+const iphone13 = new celulares (3,"iPhone", "iPhone 13", 250000, "recursos/iphone13.png");
+const iphone12 = new celulares (4,"iPhone", "iPhone 12", 200000, "recursos/iphone12.png");
+const huaweiY9 = new celulares (5,"Huawei", "Huawei Y9", 90000, "recursos/huaweiy9.png");
+const huaweiP40 = new celulares (6,"Huawei", "Huawei P40", 230000, "recursos/huaweip40.png");
+const xiaominote = new celulares(7,"Xiaomi", "Xiaomi Note 11", 190000, "recursos/xiaominote11.png");
+const xiaomipoco = new celulares(8,"Xiaomi", "Xiaomi Poco M3", 140000, "recursos/xiaomipocom3.png")
 
 //Array de Productos
 const productos = [
@@ -55,6 +55,8 @@ guardarProductos(productos);
 //Secciones HTML
 
 const seccionProductos = document.getElementById("productos");
+
+const contadorCarrito = document.getElementById("contadorCarrito");
 
 //Carrito
 const seccionCarrito = document.getElementById("carrito");
@@ -118,13 +120,18 @@ function agregarCarrito(id){
                                     `
         productosEnCarrito.appendChild(elementoAñadido);
         seccionTotal.innerHTML = "";
-        if(carritoProductos.length > 0){
-            seccionTotal.innerHTML = `
-                                    <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
-                                    <h4>Total a pagar: $${compraTotal = compraTotal + productoSeleccionado.precio}</h4>
-                                    `
-        }
+
+        //operador ternario
+
+        carritoProductos.length > 0 ?   seccionTotal.innerHTML = `
+                                        <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
+                                        <h4>Total a pagar: $${compraTotal = compraTotal + productoSeleccionado.precio}</h4>
+                                        ` : seccionTotal.innerHTML = ""
+
+        carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
+                                    contadorCarrito.innerHTML = ""
 }
+
 
 //Eliminar elemento del carrito
 function eliminarCarrito(id){
@@ -158,6 +165,8 @@ function eliminarCarrito(id){
             `
         }
         guardarProductosCarrito(carritoProductos);
+        carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
+        contadorCarrito.innerHTML = ""
     }
 }
 
@@ -173,6 +182,8 @@ function confirmarCompra(){
     productosEnCarrito.innerHTML = "";
     carritoProductos = [];
     guardarProductosCarrito(carritoProductos);
+    carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
+    contadorCarrito.innerHTML = ""
 }
 
 
