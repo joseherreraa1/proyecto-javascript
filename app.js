@@ -103,19 +103,29 @@ function seleccionado (id){
 function agregarCarrito(id){
     let productoSeleccionado = seleccionado(id);
     let carritoProductos = obtenerProductosCarrito();
-    productoSeleccionado.cantidad = 1;
-    carritoProductos.push(productoSeleccionado);
+
+
+//Spread
+const producto = {
+    ...productoSeleccionado,
+    cantidad: 1,
+}
+
+
+//Desestructuracion
+const{nombre, precio, imagen} = producto
+carritoProductos.push(producto);
     guardarProductosCarrito(carritoProductos);
         const elementoAñadido = document.createElement("div");
         elementoAñadido.className = "elementoAñadido";
         elementoAñadido.innerHTML = `
                                     <div>
-                                    <h3>${productoSeleccionado.nombre}</h3>
-                                    <h4>${productoSeleccionado.precio}$</h4>
-                                    <button class="boton1" onclick="eliminarCarrito(${productoSeleccionado.id})">Eliminar</button>
+                                    <h3>${nombre}</h3>
+                                    <h4>${precio}</h4>
+                                    <button class="boton1" onclick="eliminarCarrito(${id})">Eliminar</button>
                                     </div>
                                     <div>
-                                    <img class="imgCarrito" src="${productoSeleccionado.imagen}" alt="">
+                                    <img class="imgCarrito" src="${imagen}" alt="">
                                     </div>
                                     `
         productosEnCarrito.appendChild(elementoAñadido);

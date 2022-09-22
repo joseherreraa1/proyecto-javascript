@@ -92,7 +92,6 @@
     nav ul a li {
     list-style: none;
     text-decoration: none;
-    font-family: "fuente1";
     font-size: 14px;
     margin-left: 50px;
     }
@@ -172,7 +171,6 @@
 
     .carrito .tuCarrito h3 {
     font-size: 20px;
-    font-family: "fuente1";
     }
 
     .carrito .tuCarrito a {
@@ -198,10 +196,6 @@
     position: sticky;
     }
 
-    .carrito .totalConfirmar h4 {
-    font-family: "fuente1";
-    }
-
     .carrito .productosCarrito {
     height: 500px;
     overflow-y: scroll;
@@ -221,14 +215,6 @@
     background-color: #FFFF;
     margin-bottom: 20px;
     border-radius: 30px;
-    }
-
-    .carrito .elementoAñadido h3 {
-    font-family: "fuente1";
-    }
-
-    .carrito .elementoAñadido h4 {
-    font-family: "fuente2";
     }
 
     .carrito .elementoAñadido button {
@@ -260,13 +246,12 @@
 
     .logoCarrito h3 {
     top: 0;
-    font-family: "fuente1";
     font-size: 15px;
     }
 
     .seccionProductos .tituloProductos {
-    font-family: "fuente1";
-    font-size: 25px;
+    font-size: 40px;
     margin-left: 20px;
     margin-top: 20px;
     }
+
