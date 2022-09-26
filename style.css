@@ -255,3 +255,46 @@
     margin-top: 20px;
     }
 
+    .form {
+        display: flex;
+        flex-direction: column;
+        background-color: #FFFFFF;
+        height: 90%;
+        padding: 20px;
+        border-radius: 30px;
+    }
+    
+    .form .tituloForm {
+        color: lightgray;
+        font-size: 20px;
+        margin-bottom: 25px;
+    }
+    
+    .form label {
+        font-size: 14px;
+        font-weight: 300;
+        color: #131313;
+    }
+    
+    .form .inputForm {
+        margin: 10px 0px;
+        padding: 10px;
+        height: 20px;
+        border: none;
+        border-bottom: 1px solid gray;
+    }
+    
+    .form .tarjetasIconos i {
+        font-size: 35px;
+        margin-right: 10px;
+    }
+    
+    .form .tarjetaInfo {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .form .sm {
+        width: 30%;
+    }
+    

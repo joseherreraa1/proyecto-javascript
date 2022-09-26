@@ -101,45 +101,63 @@ function seleccionado (id){
 
 //Agregar elemento al carrito
 function agregarCarrito(id){
-    let productoSeleccionado = seleccionado(id);
     let carritoProductos = obtenerProductosCarrito();
+    let posicion = carritoProductos.findIndex(x => x.id == id);
 
-
-//Spread
-const producto = {
-    ...productoSeleccionado,
-    cantidad: 1,
+    if(posicion > -1){
+        carritoProductos[posicion].cantidad = carritoProductos[posicion].cantidad + 1;
+        compraTotal = compraTotal + carritoProductos[posicion].precio;
+    }else{
+        let productoSeleccionado = seleccionado(id);
+        productoSeleccionado.cantidad = 1;
+        compraTotal = compraTotal + productoSeleccionado.precio;
+        carritoProductos.push(productoSeleccionado);
 }
 
 
-//Desestructuracion
-const{nombre, precio, imagen} = producto
-carritoProductos.push(producto);
     guardarProductosCarrito(carritoProductos);
+        productosEnCarrito.innerHTML = "";
+
+        for(let producto of carritoProductos){
         const elementoAñadido = document.createElement("div");
         elementoAñadido.className = "elementoAñadido";
         elementoAñadido.innerHTML = `
                                     <div>
-                                    <h3>${nombre}</h3>
-                                    <h4>${precio}</h4>
-                                    <button class="boton1" onclick="eliminarCarrito(${id})">Eliminar</button>
+                                    <h3>${producto.nombre}</h3>
+                                    <h4>${producto.precio}$</h4>
+                                    <h5>Cantidad: ${producto.cantidad}</h5>
+                                    <button class="boton1" onclick="eliminarCarrito(${producto.id})">Eliminar</button>
                                     </div>
                                     <div>
-                                    <img class="imgCarrito" src="${imagen}" alt="">
-                                    </div>
+                                    <img class="imgCarrito" src="${producto.imagen}" alt="">                                    </div>
                                     `
         productosEnCarrito.appendChild(elementoAñadido);
-        seccionTotal.innerHTML = "";
+        console.log(producto);
+        }
 
+        seccionTotal.innerHTML = "";
         //operador ternario
 
         carritoProductos.length > 0 ?   seccionTotal.innerHTML = `
                                         <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
-                                        <h4>Total a pagar: $${compraTotal = compraTotal + productoSeleccionado.precio}</h4>
+                                        <h4>Total a pagar: $${compraTotal}</h4>
                                         ` : seccionTotal.innerHTML = ""
 
         carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
                                     contadorCarrito.innerHTML = ""
+
+//Notificacion
+Toastify({
+    text: "Has añadido un producto a tu carrito",
+    duration: 3000,
+    close: true,
+    gravity: "top", 
+    position: "left", 
+    stopOnFocus: true, 
+    style: {
+        background: "linear-gradient(to right, #FD794F, #c95f3f)",
+    },
+}).showToast();
 }
 
 
@@ -151,51 +169,110 @@ function eliminarCarrito(id){
     let posicion = carritoProductos.findIndex(x => x.id == id);
     carritoProductos[posicion].cantidad -= 1;
     compraTotal = 0;
+    guardarProductosCarrito(carritoProductos);
     if(carritoProductos[posicion].cantidad == 0){
         carritoProductos.splice(posicion, 1);
-        productosEnCarrito.innerHTML = "";
-        seccionTotal.innerHTML = "";
-        for(let producto of carritoProductos){
-            const elementoAñadido = document.createElement("div");
-            elementoAñadido.className = "elementoAñadido";
-            elementoAñadido.innerHTML = `
-                                        <div>
-                                        <h3>${producto.nombre}</h3>
-                                        <h4>${producto.precio}$</h4>
-                                        <button class="boton1" onclick="eliminarCarrito(${producto.id})">Eliminar</button>
-                                        </div>
-                                        <div>
-                                        <img class="imgCarrito" src="${producto.imagen}" alt="">
-                                        </div>
-                                        `
-            productosEnCarrito.appendChild(elementoAñadido);
-            seccionTotal.innerHTML = `
-            <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
-            <h4>Total a pagar: $${compraTotal = compraTotal + producto.precio}</h4>
-            `
-        }
         guardarProductosCarrito(carritoProductos);
-        carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
-        contadorCarrito.innerHTML = ""
     }
-}
-
-//Evento confirmar compra
-function confirmarCompra(){
-    let carritoProductos = obtenerProductosCarrito();
-    seccionTotal.innerHTML = "";
-    seccionTotal.innerHTML = `
-                            <h4>
-                                Compra confirmada
-                            </h4>
-                            `
     productosEnCarrito.innerHTML = "";
-    carritoProductos = [];
+    seccionTotal.innerHTML = "";
+    for(let producto of carritoProductos){
+        compraTotal = compraTotal + producto.precio * producto.cantidad;
+        const elementoAñadido = document.createElement("div");
+        elementoAñadido.className = "elementoAñadido";
+        elementoAñadido.innerHTML = `
+                                    <div>
+                                    <h3>${producto.nombre}</h3>
+                                    <h4>${producto.precio}$</h4>
+                                    <h5>Cantidad: ${producto.cantidad}</h5>
+                                    <button class="boton1" onclick="eliminarCarrito(${producto.id})">Eliminar</button>
+                                    </div>
+                                    <div>
+                                    <img class="imgCarrito" src="${producto.imagen}" alt="">
+                                    </div>
+                                    `
+        productosEnCarrito.appendChild(elementoAñadido);
+        seccionTotal.innerHTML = `
+        <button class="boton2" onclick="confirmarCompra()">Confirmar compra</button>
+        <h4>Total a pagar: $${compraTotal}</h4>
+        `
+    }
     guardarProductosCarrito(carritoProductos);
     carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
     contadorCarrito.innerHTML = ""
 }
 
+
+//Evento confirmar compra
+function confirmarCompra(){
+
+//Vaciamos Carrito
+    let carritoProductos = obtenerProductosCarrito();
+    carritoProductos = [];
+    guardarProductosCarrito(carritoProductos);
+
+//Creamos formulario
+    const formulario = document.createElement("div");
+    formulario.className = "form";
+    formulario.innerHTML = `
+    <h2 class="tituloForm">Informacion de pago</h2>
+    <label for="">Nombre y apellido</label>
+    <input type="text" class="inputForm" value="">
+    
+    <label for="">Numero de telefono</label>
+    <input type="text" class="inputForm" value="">
+    
+    <label for="">Direccion</label>
+    <input type="text" class="inputForm" id="direccion" value="">
+    <h2 class="tituloForm">Metodo de pago</h2>
+    <div class="tarjetasIconos">
+        <i class='bx bxl-visa'></i>
+        <i class='bx bxl-mastercard' ></i>
+    </div>
+    <input type="password" class="inputForm" placeholder="Numero de tarjeta">
+    <div class="tarjetaInfo">
+        <input type="text" placeholder="mm" class="inputForm sm" value="">
+        <input type="text" placeholder="yyyy" class="inputForm sm" value="">
+        <input type="text" placeholder="cvv" class="inputForm sm" value="">
+    </div>
+    `
+    productosEnCarrito.innerHTML = "";
+    productosEnCarrito.appendChild(formulario);
+
+
+
+    seccionTotal.innerHTML = `
+    <button class="boton2" onclick="confirmarCompra1()">Confirmar compra</button>
+    <h4>Total a pagar: $${compraTotal}</h4>
+    `
+
+    carritoProductos.length > 0 ? contadorCarrito.innerHTML = `${carritoProductos.length}` : 
+    contadorCarrito.innerHTML = ""
+    compraTotal = 0;
+}
+
+function validarForm(){
+
+    const inputs = document.querySelectorAll("inputForm");
+
+    if(inputs.values == ""){
+        seccionTotal.innerHTML = `
+        <button class="boton2" onclick="confirmarCompra1()">Confirmar compra</button>
+        <h4>Total a pagar: $${compraTotal}</h4>
+        <h4>Error: complete todos los campos del formulario</h4>
+        `
+    }else{
+        const direccion = document.getElementById("direccion");
+        productosEnCarrito.innerHTML = "";
+        seccionTotal.innerHTML = `
+        <h4>Compra confirmada! su pedido llegara a ${direccion.value} en los proximos dias.</h4>
+        `
+    }
+}
+
+function confirmarCompra1(){
+    validarForm();
+}
 
 //Renderizado de productos
 renderProductos();
