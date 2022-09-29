@@ -34,6 +34,7 @@
     color: #FFFF;
     border: none;
     border-radius: 10px;
+    cursor: pointer;
     }
 
     .botonActivo {
@@ -194,6 +195,7 @@
     align-items: center;
     justify-content: space-around;
     position: sticky;
+    padding: 20px;
     }
 
     .carrito .productosCarrito {
