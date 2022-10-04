@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "marca": "Samsung",
+        "nombre": "Samsung A20",
+        "precio": 180000,
+        "imagen":"recursos/s20.png"
+    },
+    {
+        "id": 2,
+        "marca": "Samsung",
+        "nombre": "Samsung A73",
+        "precio": 110000,
+        "imagen":"recursos/a73.png"
+    },
+    {
+        "id": 3,
+        "marca": "Iphone",
+        "nombre": "iPhone 13",
+        "precio": 250000,
+        "imagen":"recursos/iphone13.png"
+    },
+    {
+        "id": 4,
+        "marca": "Iphone",
+        "nombre": "Iphone 12",
+        "precio": 200000,
+        "imagen":"recursos/iphone12.png"
+    },
+    {
+        "id": 5,
+        "marca": "Huawei",
+        "nombre": "Huawei Y9",
+        "precio": 90000,
+        "imagen":"recursos/huaweiy9.png"
+    },
+    {
+        "id": 6,
+        "marca": "Huawei",
+        "nombre": "Huawei P40",
+        "precio": 230000,
+        "imagen":"recursos/huaweip40.png"
+    },
+    {
+        "id": 7,
+        "marca": "Xiaomi",
+        "nombre": "Xiaomi Note 11",
+        "precio": 190000,
+        "imagen":"recursos/xiaominote11.png"
+    },
+    {
+        "id": 8,
+        "marca": "Xiaomi",
+        "nombre": "Xiaomi Poco M3",
+        "precio": 140000,
+        "imagen":"recursos/xiaomipocom3.png"
+    }
+]

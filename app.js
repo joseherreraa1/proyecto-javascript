@@ -19,42 +19,15 @@ guardarProductosCarrito(productosCarrito);
 //Compra total
 let compraTotal = 0;
 
-//Constructor de productos
-class celulares{
-    constructor(id, marca, nombre, precio, imagen){
-        this.id = parseInt(id);
-        this.marca = marca;
-        this.nombre = nombre;
-        this.precio = parseInt(precio);
-        this.imagen = imagen;
-    }
-}
-//Productos
-const samsungS20 = new celulares (1,"Samsung", "Samsung S20", 180000, "recursos/s20.png");
-const samsungA73 = new celulares (2,"Samsung", "Samsung A73", 110000, "recursos/a73.png");
-const iphone13 = new celulares (3,"iPhone", "iPhone 13", 250000, "recursos/iphone13.png");
-const iphone12 = new celulares (4,"iPhone", "iPhone 12", 200000, "recursos/iphone12.png");
-const huaweiY9 = new celulares (5,"Huawei", "Huawei Y9", 90000, "recursos/huaweiy9.png");
-const huaweiP40 = new celulares (6,"Huawei", "Huawei P40", 230000, "recursos/huaweip40.png");
-const xiaominote = new celulares(7,"Xiaomi", "Xiaomi Note 11", 190000, "recursos/xiaominote11.png");
-const xiaomipoco = new celulares(8,"Xiaomi", "Xiaomi Poco M3", 140000, "recursos/xiaomipocom3.png")
-
-//Array de Productos
-const productos = [
-    samsungS20,
-    samsungA73,
-    iphone13,
-    iphone12,
-    huaweiY9,
-    huaweiP40,
-    xiaominote,
-    xiaomipoco,
-];
-guardarProductos(productos);
 
 //Secciones HTML
 
 const seccionProductos = document.getElementById("productos");
+const seccionProductosSamsung = document.getElementById("productosSamsung");
+const seccionProductosIphone = document.getElementById("productosIphone");
+const seccionProductosHuawei = document.getElementById("productosHuawei");
+const seccionProductosXiaomi = document.getElementById("productosXiaomi");
+
 
 const contadorCarrito = document.getElementById("contadorCarrito");
 
@@ -79,9 +52,14 @@ cerrarCarrito.onclick = () => {
 
 //Renderizado de productos
 
-function renderProductos(){
-    obtenerProductos();
-    for(const producto of productos){
+async function renderProductosSamsung(){
+    const infoProductos = await fetch("productos.json")
+    const productos = await infoProductos.json();
+    guardarProductos(productos);
+    const arrayProductos = obtenerProductos();
+    const productosSamsung = arrayProductos.filter((item => item.marca == "Samsung"));
+
+    for(const producto of productosSamsung){
         const tarjetas = document.createElement("div");
         tarjetas.className = "tarjeta";
         tarjetas.innerHTML = `  <img src="${producto.imagen}" alt="${producto.nombre}">
@@ -89,13 +67,68 @@ function renderProductos(){
                                 <h4>$ ${producto.precio}</h4>
                                 <button class="boton1" onclick="agregarCarrito(${producto.id})" >Añadir al carrito</button>
                                 `
-        seccionProductos.appendChild(tarjetas);
-    }    
+        seccionProductosSamsung.appendChild(tarjetas);
+    }
 }
 
+async function renderProductosIphone(){
+    const infoProductos = await fetch("productos.json")
+    const productos = await infoProductos.json();
+    guardarProductos(productos);
+    const arrayProductos = obtenerProductos();
+    const productosIphone = arrayProductos.filter((item => item.marca == "Iphone"));
+
+    for(const producto of productosIphone){
+        const tarjetas = document.createElement("div");
+        tarjetas.className = "tarjeta";
+        tarjetas.innerHTML = `  <img src="${producto.imagen}" alt="${producto.nombre}">
+                                <h3>${producto.nombre}</h3>
+                                <h4>$ ${producto.precio}</h4>
+                                <button class="boton1" onclick="agregarCarrito(${producto.id})" >Añadir al carrito</button>
+                                `
+        seccionProductosIphone.appendChild(tarjetas);
+    }
+}
+async function renderProductosHuawei(){
+    const infoProductos = await fetch("productos.json")
+    const productos = await infoProductos.json();
+    guardarProductos(productos);
+    const arrayProductos = obtenerProductos();
+    const productosHuawei = arrayProductos.filter((item => item.marca == "Huawei"));
+
+    for(const producto of productosHuawei){
+        const tarjetas = document.createElement("div");
+        tarjetas.className = "tarjeta";
+        tarjetas.innerHTML = `  <img src="${producto.imagen}" alt="${producto.nombre}">
+                                <h3>${producto.nombre}</h3>
+                                <h4>$ ${producto.precio}</h4>
+                                <button class="boton1" onclick="agregarCarrito(${producto.id})" >Añadir al carrito</button>
+                                `
+        seccionProductosHuawei.appendChild(tarjetas);
+    }
+}
+async function renderProductosXiaomi(){
+    const infoProductos = await fetch("productos.json")
+    const productos = await infoProductos.json();
+    guardarProductos(productos);
+    const arrayProductos = obtenerProductos();
+    const productosXiaomi = arrayProductos.filter((item => item.marca == "Xiaomi"));
+
+    for(const producto of productosXiaomi){
+        const tarjetas = document.createElement("div");
+        tarjetas.className = "tarjeta";
+        tarjetas.innerHTML = `  <img src="${producto.imagen}" alt="${producto.nombre}">
+                                <h3>${producto.nombre}</h3>
+                                <h4>$ ${producto.precio}</h4>
+                                <button class="boton1" onclick="agregarCarrito(${producto.id})" >Añadir al carrito</button>
+                                `
+        seccionProductosXiaomi.appendChild(tarjetas);
+    }
+}
 //Elemento seleccionado
 
 function seleccionado (id){
+    const productos = obtenerProductos();
     return productos.find(x => x.id == id);
 }
 
@@ -109,6 +142,7 @@ function agregarCarrito(id){
         compraTotal = compraTotal + carritoProductos[posicion].precio;
     }else{
         let productoSeleccionado = seleccionado(id);
+        console.log(productoSeleccionado)
         productoSeleccionado.cantidad = 1;
         compraTotal = compraTotal + productoSeleccionado.precio;
         carritoProductos.push(productoSeleccionado);
@@ -164,8 +198,6 @@ Toastify({
 //Eliminar elemento del carrito
 function eliminarCarrito(id){
     let carritoProductos = obtenerProductosCarrito();
-    let productoSeleccionado = seleccionado(id);
-    console.log(productoSeleccionado);
     let posicion = carritoProductos.findIndex(x => x.id == id);
     carritoProductos[posicion].cantidad -= 1;
     compraTotal = 0;
@@ -309,4 +341,7 @@ function confirmarCompra1(){
 }
 
 //Renderizado de productos
-renderProductos();
+renderProductosSamsung();
+renderProductosIphone();
+renderProductosHuawei();
+renderProductosXiaomi();
