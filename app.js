@@ -329,10 +329,13 @@ function validarForm(){
             <h4>Error: completa los datos de tu tarjeta</h4>
         `
     }else{
+        swal({
+            title: "Gracias " + nombre.value + "!",
+            text: "Tu pedido llegara a "+ direccion.value + " en los proximos dias",
+            icon: "success",
+        });
         productosEnCarrito.innerHTML = "";
-        seccionTotal.innerHTML = `
-        <h4>Compra confirmada! su pedido llegara a ${direccion.value} en los proximos dias.</h4>
-        `
+        seccionTotal.innerHTML = ``
     }
 }
 
